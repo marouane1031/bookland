@@ -1,0 +1,68 @@
+:root {
+  --primary: #0b8b81;
+  --secondary: #5be7de;
+  --primary-overlay: hsl(227, 54%, 34%, 0.65);
+  --secondary-overlay: hsl(121, 40%, 45%, 0.65);
+}
+
+* {
+  font-family: "Outfit", sans-serif;
+}
+.navbar {
+  background-color: var(--primary);
+}
+.nav-wrapper {
+  padding: 0 2rem;
+}
+.navbar ul li a {
+  display: flex;
+  color: #ffffffbd;
+  font-size: 18px;
+}
+.navbar ul li a:hover {
+  color: #fff !important;
+}
+
+.navbar ul li a.active {
+    color: #fff !important;
+    background-color: var(--primary);
+  }
+
+.navbar ul li a i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to left, var(--secondary-overlay), var(--primary-overlay)),
+    url("/assets/bg.jpeg") no-repeat center center / cover;
+  margin: 0;
+  flex-direction: column;
+  clip-path: ellipse(80% 70% at 50% 30%);
+}
+
+.header .header-title {
+  font-size: 10rem;
+  color: #fff;
+  margin: 0;
+  font-weight: bold;
+  font-family: 'Playball', cursive;
+}
+
+.header .bookland-icon {
+    font-size: 10rem;
+    background: -webkit-linear-gradient(var(--secondary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.header .header-subtitle {
+    font-size: 2rem;
+    color: #eee;
+    text-transform: uppercase;
+}

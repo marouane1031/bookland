@@ -3,48 +3,75 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
-			{% endblock %}
+			Book Land -
+			{% block title %}{% endblock %}
 		</title>
-		<!--Import Google Icon Font-->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!--Import materialize.css-->
-		<!-- Compiled and minified CSS -->
+		<!--Import Google Font-->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
 		<link
-		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> <!-- Compiled and minified JavaScript -->
+		href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+
+		<!--Import Google Icon Font-->
+		<link
+		href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<!--Import materialize.css-->
+		<link
+		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 		<!--Let browser know website is optimized for mobile-->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<!--Import customized style -->
+		<link rel="stylesheet" href="{{ asset('/assets/style.css') }}"/>
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
 		{% endblock %}
 
+		<!--Import Font Awesome script -->
+		<script src="https://kit.fontawesome.com/57639a4634.js" crossorigin="anonymous"></script>
 		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
 		{% endblock %}
 	</head>
 	<body>
-		<nav>
-			<div class="nav-wrapper" style="padding: 0 2rem 0 2rem">
+		<nav class="navbar">
+			<div class="nav-wrapper">
 				<a href="#" class="brand-logo">
-                    <img src="{{ asset('/images/logo.png') }}" width="200"/>
-                </a>
+					<img src="{{ asset('/assets/logo.png') }}" width="155"/>
+				</a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<li>
-						<a href="sass.html">Sass</a>
+						<a href="{{ path('accueil') }}">
+							<i class="fas fa-building"></i>
+							Accueil
+						</a>
 					</li>
 					<li>
-						<a href="badges.html">Components</a>
+						<a href="{{ path('auteur_index') }}" style="display: flex;">
+							<i class="fas fa-user-tie"></i>
+							Auteurs
+						</a>
 					</li>
 					<li>
-						<a href="collapsible.html">JavaScript</a>
+						<a href="{{ path('livre_index') }}">
+							<i class="fas fa-book"></i>Livres
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('genre_index') }}">
+							<i class="fas fa-sign"></i>
+							Genres
+						</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
-		<div class="container"> {% block body %}{% endblock %}
-			<div/>
-		</body>
+		{% block body %}{% endblock %}
 	</body>
 </html>
