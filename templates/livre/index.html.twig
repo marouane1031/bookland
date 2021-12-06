@@ -3,6 +3,16 @@
 {% block title %}Livre index
 {% endblock %}
 
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+  });
+</script>
+
+{% endblock javascripts %}
+
 {% block body %}
 	<div class="container">
 		<h1>Livre index</h1>
@@ -29,7 +39,9 @@
 						<td>{{ livre.nbpages }}</td>
 						<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
 						<td>{{ livre.note }}</td>
-						<td>{{ livre.auteurs }}</td>
+						<td>
+							<a class="waves-effect waves-light btn modal-trigger" href="{{'#livre-' ~ livre.id}}">View</a>
+						</td>
 						<td>
 							<a href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
 							<a href="{{ path('livre_edit', {'id': livre.id}) }}">edit</a>
@@ -44,5 +56,19 @@
 		</table>
 
 		<a href="{{ path('livre_new') }}">Create new</a>
+
+		{% for livre in livres %}
+			<!-- Modal Structure -->
+			<div id="{{'livre-' ~ livre.id}}" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					{% for auteur in livre.auteurs %}
+						<h3>{{ auteur.nomPrenom }}</h3>
+					{% endfor %}
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 {% endblock %}

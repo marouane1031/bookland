@@ -2,6 +2,19 @@
 
 {% block title %}Edit Livre{% endblock %}
 
+{% block javascripts %}
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    var Calendar = document.querySelectorAll('.datepicker');
+    M.Datepicker.init(Calendar, {});
+
+    var Select = document.querySelectorAll('select');
+    M.FormSelect.init(Select, {});
+    
+ });
+</script>
+{% endblock javascripts %}
+
 {% block body %}
     <h1>Edit Livre</h1>
 

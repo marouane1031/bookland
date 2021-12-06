@@ -52,7 +52,6 @@ class Livre
 
     /**
      * @ORM\ManyToMany(targetEntity=Auteur::class)
-     * @ORM\Column(nullable=false)
      */
     private $auteurs;
 
@@ -155,5 +154,10 @@ class Livre
         $this->auteurs = $auteurs;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
     }
 }
