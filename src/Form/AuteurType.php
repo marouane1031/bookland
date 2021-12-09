@@ -6,6 +6,8 @@ use App\Entity\Auteur;
 use App\Entity\Livre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,11 +18,19 @@ class AuteurType extends AbstractType
     {
         $builder
             ->add('nom_prenom', TextType::class)
-            ->add('sexe')
-            ->add('date_de_naissance', TextType::class, [
+            ->add('sexe', ChoiceType::class, [
+                'choices' => [
+                    'Masculin' => 'M',
+                    'Feminin' => 'F'
+                ],
+                'multiple' => false
+            ])
+            ->add('date_de_naissance', DateType::class, [
                 'attr' => [
                     'class' => 'datepicker'
-                ]
+                ],
+                'widget' => 'single_text',
+                'html5' => false
             ])
             ->add('nationalite', TextType::class)
             ->add('livres', EntityType::class, [

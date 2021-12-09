@@ -60,9 +60,8 @@
     -webkit-text-fill-color: transparent;
 }
 
-
 .header .header-subtitle {
-    font-size: 2rem;
-    color: #eee;
-    text-transform: uppercase;
+  font-size: 2rem;
+  color: #eee;
+  text-transform: uppercase;
 }

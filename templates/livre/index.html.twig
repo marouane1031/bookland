@@ -5,70 +5,97 @@
 
 {% block javascripts %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {});
-  });
+		document.addEventListener('DOMContentLoaded', function () {
+			var modal = document.querySelectorAll('.modal');
+			M.Modal.init(modal, {});
+			var tooltip = document.querySelectorAll('.tooltipped');
+			M.Tooltip.init(tooltip, {});
+		});
 </script>
 
 {% endblock javascripts %}
 
+{% block stylesheets %}
+<style type="text/css">
+	table tbody td.table-action {
+		display: flex !important;
+		justify-content: space-evenly;
+	}
+</style>
+{% endblock stylesheets %}
+
 {% block body %}
-	<div class="container">
-		<h1>Livre index</h1>
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Isbn</th>
-					<th>Titre</th>
-					<th>Nbpages</th>
-					<th>Date_de_parution</th>
-					<th>Note</th>
-					<th>Auteurs</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for livre in livres %}
-					<tr>
-						<td>{{ livre.id }}</td>
-						<td>{{ livre.isbn }}</td>
-						<td>{{ livre.titre }}</td>
-						<td>{{ livre.nbpages }}</td>
-						<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
-						<td>{{ livre.note }}</td>
-						<td>
-							<a class="waves-effect waves-light btn modal-trigger" href="{{'#livre-' ~ livre.id}}">View</a>
-						</td>
-						<td>
-							<a href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
-							<a href="{{ path('livre_edit', {'id': livre.id}) }}">edit</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="8">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-		<a href="{{ path('livre_new') }}">Create new</a>
-
-		{% for livre in livres %}
-			<!-- Modal Structure -->
-			<div id="{{'livre-' ~ livre.id}}" class="modal modal-fixed-footer">
-				<div class="modal-content">
-					{% for auteur in livre.auteurs %}
-						<h3>{{ auteur.nomPrenom }}</h3>
-					{% endfor %}
-				</div>
-				<div class="modal-footer">
-					<a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
-				</div>
-			</div>
-		{% endfor %}
+<div class="container">
+	<div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0">
+		<h1><i class="fas fa-book"></i> Liste livres</h1>
+		<a class="btn waves-effect waves-light" href="{{ path('livre_new') }}">
+			<i class="fas fa-plus"></i>
+			Ajouter
+		</a>
 	</div>
+	
+
+	<table class="table striped responsive-table centered">
+		<thead>
+			<tr>
+				<th>ISBN</th>
+				<th>Titre</th>
+				<th>Nombre de pages</th>
+				<th>Date de parution</th>
+				<th>Note</th>
+				<th>Auteurs</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for livre in livres %}
+				<tr>
+					<td>{{ livre.isbn }}</td>
+					<td style="width: 30%">{{ livre.titre }}</td>
+					<td>{{ livre.nbpages }}</td>
+					<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
+					<td>{{ livre.note }}</td>
+					<td>
+						<a 
+							class="waves-effect waves-light btn modal-trigger tooltipped"
+							href="{{'#livre-' ~ livre.id}}"
+							data-position="bottom" 
+							data-tooltip="Voir ses auteurs">
+							<i class="fas fa-user-graduate"></i>
+						</a>
+					</td>
+					<td class="table-action">
+						<a class="btn tooltipped" data-position="bottom" data-tooltip="Voir" href="{{ path('livre_show', {'id': livre.id}) }}">
+							<i class="fas fa-eye"></i>
+						</a>
+						<a class="btn tooltipped amber darken-3" data-position="bottom" data-tooltip="Modifier" href="{{ path('livre_edit', {'id': livre.id}) }}">
+							<i class="fas fa-edit"></i>
+						</a>
+						{{ include('livre/_delete_form.html.twig') }}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('livre_new') }}">Create new</a>
+
+{% for livre in livres %}
+	<!-- Modal Structure -->
+	<div id="{{'livre-' ~ livre.id}}" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			{% for auteur in livre.auteurs %}
+				<h3>{{ auteur.nomPrenom }}</h3>
+			{% endfor %}
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+		</div>
+	</div>
+{% endfor %}
+</div>
 {% endblock %}

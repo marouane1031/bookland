@@ -3,26 +3,54 @@
 {% block title %}Genre index
 {% endblock %}
 
+{% block stylesheets %}
+	<style type="text/css">
+		table tbody td.table-action {
+			display: flex !important;
+			justify-content: space-evenly;
+		}
+	</style>
+{% endblock stylesheets %}
+
 {% block body %}
 	<div class="container">
-		<h1>Genre index</h1>
-
-		<table class="table">
+		<div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0">
+			<h1><i class="fas fa-sign"></i> Liste genres</h1>
+			<a class="btn waves-effect waves-light" href="{{ path('genre_new') }}">
+				<i class="fas fa-plus"></i>
+				Ajouter
+			</a>
+		</div>
+	
+		<table class="table striped responsive-table centered">
 			<thead>
 				<tr>
-					<th>Id</th>
 					<th>Nom</th>
-					<th>actions</th>
+					<th style="width: 30%">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for genre in genres %}
 					<tr>
-						<td>{{ genre.id }}</td>
 						<td>{{ genre.nom }}</td>
-						<td>
-							<a href="{{ path('genre_show', {'id': genre.id}) }}">show</a>
-							<a href="{{ path('genre_edit', {'id': genre.id}) }}">edit</a>
+						<td class="table-action" style="width: 30%; margin: auto">
+							<a 
+								class="btn tooltipped" 
+								data-position="bottom" 
+								data-tooltip="Voir" 
+								href="{{ path('genre_show', {'id': genre.id}) }}"
+								style="margin-right: 5px">
+								<i class="fas fa-eye"></i>
+							</a>
+							<a 
+								class="btn tooltipped amber darken-3" 
+								data-position="bottom" 
+								data-tooltip="Modifier" 
+								href="{{ path('genre_edit', {'id': genre.id}) }}"
+								style="margin-right: 5px">
+								<i class="fas fa-edit"></i>
+							</a>
+							{{ include('genre/_delete_form.html.twig') }}
 						</td>
 					</tr>
 				{% else %}

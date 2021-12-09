@@ -1,4 +1,20 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="row">
+	<div class="col s6">
+		{{ form_row(form.nom_prenom) }}
+	</div>
+	<div class="col s6">
+		{{ form_row(form.date_de_naissance) }}
+	</div>
+	<div class="col s6">
+		{{ form_row(form.nationalite) }}
+	</div>
+	<div class="col s6">
+		{{ form_row(form.livres) }}
+	</div>
+	<div class="col s6">
+		{{ form_row(form.sexe) }}
+	</div>
+</div>
+<button class="btn">{{ button_label|default('Créer') }}</button>
 {{ form_end(form) }}

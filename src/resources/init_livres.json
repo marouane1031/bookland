@@ -1,0 +1,105 @@
+[
+    {
+        "isbn": "978-2-07-036822-8",
+        "titre": "Symfonystique",
+        "nbpages": "117",
+        "date_de_parution": "20/01/2008",
+        "note": "8",
+        "genres": [
+            {
+                "nom": "Policier"
+            },
+            {
+                "nom": "Philosophie"
+            }
+        ],
+        "auteurs": [
+            {
+                "nom_prenom": "Francis Gabrelot"
+            },
+            {
+                "nom_prenom": "Ayn Rand"
+            },
+            {
+                "nom_prenom": "Nancy Grave"
+            }
+        ]
+    },
+    {
+        "isbn": "978-2-251-44417-8",
+        "titre": "La grève",
+        "nbpages": "1245",
+        "date_de_parution": "12/06/1961",
+        "note": "19",
+        "genres": [
+            {
+                "nom": "Philosophie"
+            }
+        ],
+        "auteurs": [
+            {
+                "nom_prenom": "Ayn Rand"
+            },
+            {
+                "nom_prenom": "James Enckling"
+            }
+        ]
+    },
+    {
+        "isbn": "978-2-212-55652-0",
+        "titre": "Négociation Complexe",
+        "nbpages": "234",
+        "date_de_parution": "25/09/1992",
+        "note": "16",
+        "genres": [
+            {
+                "nom": "Philosophie"
+            }
+        ],
+        "auteurs": [
+            {
+                "nom_prenom": "Richard Thaler"
+            },
+            {
+                "nom_prenom": "Cass Sunstein"
+            }
+        ]
+    },
+    {
+        "isbn": "978-0-300-12223-7",
+        "titre": "Ma vie",
+        "nbpages": "5",
+        "date_de_parution": "08/11/2021",
+        "note": "3",
+        "genres": [
+            {
+                "nom": "Policier"
+            }
+        ],
+        "auteurs": [
+            {
+                "nom_prenom": "Jean Dupont"
+            }
+        ]
+    },
+    {
+        "isbn": "978-0-141-18786-0",
+        "titre": "Le monde comme volonté et comme représentation",
+        "nbpages": "1987",
+        "date_de_parution": "09/11/1821,",
+        "note": "19",
+        "genres": [
+            {
+                "nom": "Policier"
+            }
+        ],
+        "auteurs": [
+            {
+                "nom_prenom": "Nancy Grave"
+            },
+            {
+                "nom_prenom": "Francis Gabrelot"
+            }
+        ]
+    }
+]

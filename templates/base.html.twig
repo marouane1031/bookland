@@ -21,22 +21,17 @@
 		<meta
 		name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<!--Import customized style -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" href="{{ asset('/assets/style.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"/>
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
 		{% endblock %}
-
-		<!--Import Font Awesome script -->
-		<script src="https://kit.fontawesome.com/57639a4634.js" crossorigin="anonymous"></script>
-
-		<!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-		
 	</head>
 	<body>
 		<nav class="navbar">
 			<div class="nav-wrapper">
-				<a href="#" class="brand-logo">
+				<a href="{{ path('accueil') }}" class="brand-logo">
 					<img src="{{ asset('/assets/logo.png') }}" width="155"/>
 				</a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -54,7 +49,8 @@
 					</li>
 					<li>
 						<a href="{{ path('livre_index') }}">
-							<i class="fas fa-book"></i>Livres
+							<i class="fas fa-book"></i>
+							Livres
 						</a>
 					</li>
 					<li>
@@ -63,14 +59,39 @@
 							Genres
 						</a>
 					</li>
+					<li>
+						<a 
+							href="{{ path('init') }}" 
+							class="tooltipped amber darken-2" 
+							data-position="bottom" 
+							data-tooltip="Initialiser">
+							<i class="fas fa-power-off" style="margin: 0"></i>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
-		<div class="container">
-			{% block body %}{% endblock %}
-		</div>
-		    <!-- Compiled and minified JavaScript -->
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		{% block body %}{% endblock %}
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var Calendar = document.querySelectorAll('.datepicker');
+			M.Datepicker.init(Calendar, {
+			format: 'yyyy-mm-dd'
+			});
+
+			var modal = document.querySelectorAll('.modal');
+			M.Modal.init(modal, {});
+
+			var Select = document.querySelectorAll('select');
+			M.FormSelect.init(Select, {});
+
+			var tooltip = document.querySelectorAll('.tooltipped');
+			M.Tooltip.init(tooltip, {});
+			
+		});
+		</script>
 		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
 		{% endblock %}

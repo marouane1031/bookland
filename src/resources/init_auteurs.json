@@ -1,0 +1,50 @@
+[
+    {
+        "nom_prenom": "Richard Thaler",
+        "sexe": "M",
+        "date_de_naissance": "12/12/1945",
+        "nationalite": "USA"
+    },
+    {
+        "nom_prenom": "Cass Sunstein",
+        "sexe": "M",
+        "date_de_naissance": "23/11/1943",
+        "nationalite": "allemagne"
+    },
+    {
+        "nom_prenom": "Francis Gabrelot",
+        "sexe": "M",
+        "date_de_naissance": "29/01/1967",
+        "nationalite": "france"
+    },
+    {
+        "nom_prenom": "Ayn Rand",
+        "sexe": "F",
+        "date_de_naissance": "21/06/1950",
+        "nationalite": "russie"
+    },
+    {
+        "nom_prenom": "Duschmol",
+        "sexe": "M",
+        "date_de_naissance": "23/12/2001",
+        "nationalite": "groland"
+    },
+    {
+        "nom_prenom": "Nancy Grave",
+        "sexe": "F",
+        "date_de_naissance": "24/10/1952",
+        "nationalite": "USA"
+    },
+    {
+        "nom_prenom": "James Enckling",
+        "sexe": "M",
+        "date_de_naissance": "03/07/1970",
+        "nationalite": "USA"
+    },
+    {
+        "nom_prenom": "Jean Dupont",
+        "sexe": "M",
+        "date_de_naissance": "03/07/1970",
+        "nationalite": "france"
+    }
+]

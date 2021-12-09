@@ -1,26 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-
 <script>
  document.addEventListener('DOMContentLoaded', function() {
     var Calendar = document.querySelectorAll('.datepicker');
-    M.Datepicker.init(Calendar, {});
+    M.Datepicker.init(Calendar, {
+       format: 'yyyy-mm-dd'
+    });
 
     var Select = document.querySelectorAll('select');
     M.FormSelect.init(Select, {});
     
  });
 </script>
-
 {% endblock javascripts %}
 
 {% block title %}New Auteur{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Create new Auteur</h1>
 
     {{ include('auteur/_form.html.twig') }}
 
     <a href="{{ path('auteur_index') }}">back to list</a>
+</div>
 {% endblock %}

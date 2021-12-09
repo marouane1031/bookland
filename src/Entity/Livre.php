@@ -21,7 +21,7 @@ class Livre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=17)
      */
     private $isbn;
 
@@ -51,13 +51,19 @@ class Livre
     private $note;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Auteur::class)
+     * @ORM\ManyToMany(targetEntity=Auteur::class, inversedBy="livres", cascade={"persist"})
      */
     private $auteurs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="livres", cascade={"persist"})
+     */
+    private $genres;
 
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,5 +165,29 @@ class Livre
     public function __toString()
     {
         return $this->titre;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
+
+        return $this;
     }
 }

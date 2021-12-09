@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Auteur;
+use App\Entity\Genre;
 use App\Entity\Livre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -31,6 +32,14 @@ class LivreType extends AbstractType
             ->add('auteurs', EntityType::class, [
                 'class' => Auteur::class,
                 'multiple' => true,
+                'attr' => [
+                    'class' => 'input-field'
+                ]
+            ])
+            ->add('genres', EntityType::class, [
+                'class' => Genre::class,
+                'multiple' => true,
+                'required' => true,
                 'attr' => [
                     'class' => 'input-field'
                 ]

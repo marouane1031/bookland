@@ -3,32 +3,80 @@
 {% block title %}Auteur index
 {% endblock %}
 
+{% block stylesheets %}
+	<style type="text/css">
+		table tbody td.table-action {
+			display: flex !important;
+			justify-content: space-evenly;
+		}
+	</style>
+{% endblock stylesheets %}
+
 {% block body %}
 	<div class="container">
-		<h1>Auteur index</h1>
+		<div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0">
+			<h1><i class="fas fa-user-tie"></i> Liste auteurs</h1>
+			<a class="btn waves-effect waves-light" href="{{ path('auteur_new') }}">
+				<i class="fas fa-plus"></i>
+				Ajouter
+			</a>
+		</div>
 
-		<table class="table">
+		<table class="table striped responsive-table centered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Nom_prenom</th>
-					<th>Sexe</th>
-					<th>Date_de_naissance</th>
-					<th>Nationalite</th>
-					<th>actions</th>
+					<th>
+						<i class="fas fa-signature" style="margin-right: 5px"></i>
+						Nom Prénom
+					</th>
+					<th>
+						<i class="fas fa-venus-mars" style="margin-right: 5px"></i>
+						Sexe
+					</th>
+					<th>
+						<i class="fas fa-calendar-day" style="margin-right: 5px"></i>
+						Date de naissance
+					</th>
+					<th>
+						<i class="fas fa-flag" style="margin-right: 5px"></i>
+						Nationalité
+					</th>
+					<th>
+						<i class="fas fa-book" style="margin-right: 5px"></i>Livres
+					</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for auteur in auteurs %}
 					<tr>
-						<td>{{ auteur.id }}</td>
 						<td>{{ auteur.nomPrenom }}</td>
-						<td>{{ auteur.sexe }}</td>
+						<td>
+						{% if auteur.sexe == 'M' %}
+							<i class="fas fa-mars"></i> Homme
+						{% else %}
+							<i class="fas fa-venus"></i> Femme
+						{% endif %}
+						</td>
 						<td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('Y-m-d') : '' }}</td>
 						<td>{{ auteur.nationalite }}</td>
 						<td>
-							<a href="{{ path('auteur_show', {'id': auteur.id}) }}">show</a>
-							<a href="{{ path('auteur_edit', {'id': auteur.id}) }}">edit</a>
+							<a 
+								class="waves-effect waves-light btn modal-trigger tooltipped"
+								data-position="bottom" 
+								data-tooltip="Voir ses livres"
+								href="{{'#auteur-' ~ auteur.id}}">
+								<i class="fas fa-book"></i>
+							</a>
+						</td>
+						<td class="table-action">
+							<a class="btn tooltipped" data-position="bottom" data-tooltip="Voir" href="{{ path('auteur_show', {'id': auteur.id}) }}">
+								<i class="fas fa-eye"></i>
+							</a>
+							<a class="btn tooltipped amber darken-3" data-position="bottom" data-tooltip="Modifier" href="{{ path('auteur_edit', {'id': auteur.id}) }}">
+								<i class="fas fa-edit"></i>
+							</a>
+							{{ include('auteur/_delete_form.html.twig') }}
 						</td>
 					</tr>
 				{% else %}
@@ -38,7 +86,20 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
-		<a href="{{ path('auteur_new') }}">Create new</a>
 	</div>
+
+{% for auteur in auteurs %}
+	<!-- Modal Structure -->
+	<div id="{{'auteur-' ~ auteur.id}}" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			{% for livre in auteur.livres %}
+				<h3>{{ livre.titre }}</h3>
+			{% endfor %}
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+		</div>
+	</div>
+{% endfor %}
+
 {% endblock %}

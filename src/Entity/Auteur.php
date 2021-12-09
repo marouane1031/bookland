@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuteurRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Auteur
 {
@@ -42,7 +43,7 @@ class Auteur
     private $nationalite;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Livre::class)
+     * @ORM\ManyToMany(targetEntity=Livre::class, mappedBy="auteurs", cascade={"persist"})
      */
     private $livres;
 
@@ -131,5 +132,15 @@ class Auteur
     public function __toString()
     {
         return $this->nom_prenom;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function corrigeNationalite()
+    {
+        $this->nom_prenom = ucfirst($this->nom_prenom);
+        $this->nationalite = ucfirst($this->nationalite);
     }
 }
