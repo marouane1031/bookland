@@ -19,6 +19,27 @@ class AuteurRepository extends ServiceEntityRepository
         parent::__construct($registry, Auteur::class);
     }
 
+    public function findBy3Livres()
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.livres', 'livre')
+            ->groupBy('a.id')
+            ->having('count(livre) >= 3')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByGenre($genre)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.livres', 'l')
+            ->innerJoin('l.genres', 'g')
+            ->andWhere('g.id = :id')
+            ->setParameter('id', $genre->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Auteur[] Returns an array of Auteur objects
     //  */

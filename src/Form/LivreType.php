@@ -18,18 +18,20 @@ class LivreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('isbn')
-            ->add('titre', TextType::class)
+            ->add('isbn', TextType::class, ['label' => 'ISBN'])
+            ->add('titre', TextType::class, ['label' => 'Titre'])
             ->add('nbpages', IntegerType::class)
             ->add('date_de_parution', DateType::class, [
+                'label' => 'Date de parution',
                 'attr' => [
                     'class' => 'datepicker'
                 ],
                 'widget' => 'single_text',
                 'html5' => false
             ])
-            ->add('note', IntegerType::class)
+            ->add('note', IntegerType::class, ['label' => 'Note'])
             ->add('auteurs', EntityType::class, [
+                'label' => 'Auteurs',
                 'class' => Auteur::class,
                 'multiple' => true,
                 'attr' => [
@@ -37,6 +39,7 @@ class LivreType extends AbstractType
                 ]
             ])
             ->add('genres', EntityType::class, [
+                'label' => 'Genres',
                 'class' => Genre::class,
                 'multiple' => true,
                 'required' => true,

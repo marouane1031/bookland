@@ -1,15 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Genre{% endblock %}
+{% block title %}Edit Genre
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Edit Genre</h1>
+	<div class="container">
+		<h1>Modifier le genre</h1>
 
-    {{ include('genre/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('genre/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('genre_index') }}">back to list</a>
+		<div class="row">
+			<div class="col s6 offset-s6">
+				<a class="btn" href="{{ path('auteur_index') }}">
+					<i class="fas fa-clipboard-list"></i>
+					Revenir à la liste
+				</a>
+			</div>
+		</div>
 
-    {{ include('genre/_delete_form.html.twig') }}
-</div>
+	</div>
 {% endblock %}

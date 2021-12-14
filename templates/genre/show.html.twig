@@ -1,28 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Genre{% endblock %}
+{% block title %}Genre
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Genre</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ genre.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ genre.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('genre_index') }}">back to list</a>
-
-    <a href="{{ path('genre_edit', {'id': genre.id}) }}">edit</a>
-
-    {{ include('genre/_delete_form.html.twig') }}
-</div>
+	<div class="container">
+		<div class="page row">
+			<div class="picture col s6">
+				<img width="20%" src="{{ asset('/assets/category.png') }}"/>
+				<h3>{{ genre.nom }}</h3>
+			</div>
+			<div class="info col s6">
+				<h4>Informations</h4>
+				<table class="table responsive-table info-table">
+					<tbody>
+						<tr>
+							<th>Nombre total de pages</th>
+							<td>{{ pages[0].total_pages|default('0') }}</td>
+						</tr>
+						<tr>
+							<th>Nombre moyen de pages</th>
+							<td>{{ pages[0].moyen_pages|default('0.00') }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+        <div class="row">
+			<div class="col s6 offset-s6">
+				<a class="btn" href="{{ path('genre_index') }}">
+					<i class="fas fa-clipboard-list"></i>
+					Revenir à la liste
+				</a>
+				<a class="btn amber darken-3" href="{{ path('genre_edit', {'id': genre.id}) }}">
+					<i class="fas fa-edit"></i>
+					Modifier
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 offset-s6">
+				<ul class="collection with-header">
+					<li class="collection-header">
+						<h5>Auteurs <sup>(publiant au moins un livre dans ce genre)</sup></h5>
+					</li>
+					{% for auteur in auteurs %}
+						<li class="collection-item">
+							<div>
+								{{ auteur.nomPrenom }}
+								<a href="{{ path('auteur_show', {'id': auteur.id}) }}" class="secondary-content">
+									<i class="material-icons">send</i>
+								</a>
+							</div>
+						</li>
+                    {% else %}
+                        <li class="collection-item">
+                            Aucun auteur trouvé !
+                        </li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
 {% endblock %}

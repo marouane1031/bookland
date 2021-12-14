@@ -19,22 +19,17 @@ class GenreRepository extends ServiceEntityRepository
         parent::__construct($registry, Genre::class);
     }
 
-    // /**
-    //  * @return Genre[] Returns an array of Genre objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByGenreId($id)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->innerJoin('g.livres', 'lg')
+            ->innerJoin('App\Entity\Livre', 'livre', 'WITH', 'lg.id = livre.id')
+            ->andWhere('g.id = :id')
+            ->setParameter('id', $id)
+            ->select('SUM(livre.nbpages) AS total_pages', 'SUM(livre.nbpages)/COUNT(DISTINCT lg.id) AS moyen_pages')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Genre

@@ -14,14 +14,23 @@
 
 {% block body %}
 	<div class="container">
+		{% if app.request.get('error') %}
+			<div class="form">
+				<ul>
+					<li>Vous ne pouvez pas supprimer ce genre, car il est déjà affecté à au moins un livre !</li>
+				</ul>
+			</div>
+		{% endif %}
 		<div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0">
-			<h1><i class="fas fa-sign"></i> Liste genres</h1>
+			<h1>
+				<i class="fas fa-sign"></i>
+				Liste genres</h1>
 			<a class="btn waves-effect waves-light" href="{{ path('genre_new') }}">
 				<i class="fas fa-plus"></i>
 				Ajouter
 			</a>
 		</div>
-	
+
 		<table class="table striped responsive-table centered">
 			<thead>
 				<tr>
@@ -34,20 +43,10 @@
 					<tr>
 						<td>{{ genre.nom }}</td>
 						<td class="table-action" style="width: 30%; margin: auto">
-							<a 
-								class="btn tooltipped" 
-								data-position="bottom" 
-								data-tooltip="Voir" 
-								href="{{ path('genre_show', {'id': genre.id}) }}"
-								style="margin-right: 5px">
+							<a class="btn tooltipped" data-position="bottom" data-tooltip="Voir" href="{{ path('genre_show', {'id': genre.id}) }}" style="margin-right: 5px">
 								<i class="fas fa-eye"></i>
 							</a>
-							<a 
-								class="btn tooltipped amber darken-3" 
-								data-position="bottom" 
-								data-tooltip="Modifier" 
-								href="{{ path('genre_edit', {'id': genre.id}) }}"
-								style="margin-right: 5px">
+							<a class="btn tooltipped amber darken-3" data-position="bottom" data-tooltip="Modifier" href="{{ path('genre_edit', {'id': genre.id}) }}" style="margin-right: 5px">
 								<i class="fas fa-edit"></i>
 							</a>
 							{{ include('genre/_delete_form.html.twig') }}
@@ -55,12 +54,10 @@
 					</tr>
 				{% else %}
 					<tr>
-						<td colspan="3">no records found</td>
+						<td colspan="3">Aucun genre trouvé !</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-
-		<a href="{{ path('genre_new') }}">Create new</a>
 	</div>
 {% endblock %}

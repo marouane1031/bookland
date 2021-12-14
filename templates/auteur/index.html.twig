@@ -15,11 +15,20 @@
 {% block body %}
 	<div class="container">
 		<div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0">
-			<h1><i class="fas fa-user-tie"></i> Liste auteurs</h1>
-			<a class="btn waves-effect waves-light" href="{{ path('auteur_new') }}">
-				<i class="fas fa-plus"></i>
-				Ajouter
-			</a>
+			<h1>
+				<i class="fas fa-user-tie"></i>
+				Liste auteurs
+			</h1>
+			<div class="actions">
+				<a class="btn waves-effect waves-light" href="{{ path('auteur_new') }}">
+					<i class="fas fa-plus"></i>
+					Ajouter
+				</a>
+				<a class="waves-effect waves-light btn modal-trigger" href="#filtrer">
+					<i class="fas fa-search"></i>
+					Filtrer
+				</a>
+			</div>
 		</div>
 
 		<table class="table striped responsive-table centered">
@@ -52,20 +61,18 @@
 					<tr>
 						<td>{{ auteur.nomPrenom }}</td>
 						<td>
-						{% if auteur.sexe == 'M' %}
-							<i class="fas fa-mars"></i> Homme
-						{% else %}
-							<i class="fas fa-venus"></i> Femme
-						{% endif %}
+							{% if auteur.sexe == 'M' %}
+								<i class="fas fa-mars"></i>
+								Homme
+							{% else %}
+								<i class="fas fa-venus"></i>
+								Femme
+							{% endif %}
 						</td>
 						<td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('Y-m-d') : '' }}</td>
 						<td>{{ auteur.nationalite }}</td>
 						<td>
-							<a 
-								class="waves-effect waves-light btn modal-trigger tooltipped"
-								data-position="bottom" 
-								data-tooltip="Voir ses livres"
-								href="{{'#auteur-' ~ auteur.id}}">
+							<a class="waves-effect waves-light btn modal-trigger tooltipped" data-position="bottom" data-tooltip="Voir ses livres" href="{{'#auteur-' ~ auteur.id}}">
 								<i class="fas fa-book"></i>
 							</a>
 						</td>
@@ -88,18 +95,52 @@
 		</table>
 	</div>
 
-{% for auteur in auteurs %}
+	{% for auteur in auteurs %}
+		<!-- Modal Structure -->
+		<div id="{{'auteur-' ~ auteur.id}}" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<ul class="collection with-header">
+					<li class="collection-header">
+						<h4>Livres</h4>
+					</li>
+					{% for livre in auteur.livres %}
+						<li class="collection-item">
+							<div>
+								{{ livre.titre }}
+								<a href="{{ path('livre_show', {'id': livre.id}) }}" class="secondary-content">
+									<i class="material-icons">send</i>
+								</a>
+							</div>
+						</li>
+					{% else %}
+						<li class="collection-item">
+							Aucun livre trouvé !
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat red darken-1 white-text">Fermer</a>
+			</div>
+		</div>
+	{% endfor %}
 	<!-- Modal Structure -->
-	<div id="{{'auteur-' ~ auteur.id}}" class="modal modal-fixed-footer">
+	<div id="filtrer" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			{% for livre in auteur.livres %}
-				<h3>{{ livre.titre }}</h3>
-			{% endfor %}
+			<h4>Filtrer les auteurs</h4>
+
+			<ul id="tabs-swipe-demo" class="tabs tabs-title" style="margin-bottom: 1rem;">
+				<li class="tab col s3">
+					<a class="active" href="#test-swipe-1">Plus de 3 livres</a>
+				</li>
+			</ul>
+			<div id="test-swipe-1" class="col s12">
+				{{ render(path('auteur_filtrer_3_livres')) }}
+			</div>
 		</div>
 		<div class="modal-footer">
 			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
 		</div>
 	</div>
-{% endfor %}
 
 {% endblock %}

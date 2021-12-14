@@ -1,26 +1,26 @@
 {{ form_start(form) }}
-<div class="row">
+<div class="row form">
 	<div class="col s6">
 		{{ form_row(form.isbn) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.titre) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.nbpages) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.date_de_parution) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.note) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.auteurs) }}
 	</div>
-    <div class="col s6">
+	<div class="col s6">
 		{{ form_row(form.genres) }}
 	</div>
 </div>
-<button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

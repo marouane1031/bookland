@@ -17,8 +17,11 @@ class AuteurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom_prenom', TextType::class)
+            ->add('nom_prenom', TextType::class, [
+                'label' => 'Nom et Prénom'
+            ])
             ->add('sexe', ChoiceType::class, [
+                'label' => 'Sexe',
                 'choices' => [
                     'Masculin' => 'M',
                     'Feminin' => 'F'
@@ -26,20 +29,14 @@ class AuteurType extends AbstractType
                 'multiple' => false
             ])
             ->add('date_de_naissance', DateType::class, [
+                'label' => 'Date de naissance',
                 'attr' => [
                     'class' => 'datepicker'
                 ],
                 'widget' => 'single_text',
                 'html5' => false
             ])
-            ->add('nationalite', TextType::class)
-            ->add('livres', EntityType::class, [
-                'class' => Livre::class,
-                'multiple' => true,
-                'attr' => [
-                    'class' => 'input-field'
-                ]
-            ])
+            ->add('nationalite', TextType::class, ['label' => 'Nationalité'])
         ;
     }
 

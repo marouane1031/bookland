@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Genre;
 use App\Form\GenreType;
+use App\Repository\AuteurRepository;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,10 +52,13 @@ class GenreController extends AbstractController
     /**
      * @Route("/{id}", name="genre_show", methods={"GET"})
      */
-    public function show(Genre $genre): Response
+    public function show(Genre $genre, GenreRepository $genreRepository, AuteurRepository $auteurRepository): Response
     {
+        $auteurs = $auteurRepository->findByGenre($genre);
         return $this->render('genre/show.html.twig', [
             'genre' => $genre,
+            'pages' => $genreRepository->findByGenreId($genre->getId()),
+            'auteurs' => $auteurs
         ]);
     }
 
@@ -83,11 +87,16 @@ class GenreController extends AbstractController
      */
     public function delete(Request $request, Genre $genre, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$genre->getId(), $request->request->get('_token'))) {
+        //dump($genre->getLivres()); die;
+        if (count($genre->getLivres()) > 0) {
+            return $this->redirectToRoute('genre_index', 
+            ['error' => 'erreur genre'],
+            Response::HTTP_SEE_OTHER);
+        }
+        if ($this->isCsrfTokenValid('delete' . $genre->getId(), $request->request->get('_token'))) {
             $entityManager->remove($genre);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('genre_index', [], Response::HTTP_SEE_OTHER);
     }
 }

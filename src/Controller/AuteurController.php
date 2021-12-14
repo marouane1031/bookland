@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Auteur;
 use App\Form\AuteurType;
 use App\Repository\AuteurRepository;
+use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,10 +53,20 @@ class AuteurController extends AbstractController
     /**
      * @Route("/{id}", name="auteur_show", methods={"GET"})
      */
-    public function show(Auteur $auteur): Response
+    public function show(Auteur $auteur, GenreRepository $genreRepository): Response
     {
+        $genres = $genreRepository->createQueryBuilder('g')
+        ->select('DISTINCT g')
+        ->innerJoin('g.livres', 'livre')
+        ->innerJoin('livre.auteurs', 'a')
+        ->andWhere('a.id = :id')
+        ->setParameter('id', $auteur->getId())
+        ->getQuery()
+        ->getResult();
+
         return $this->render('auteur/show.html.twig', [
             'auteur' => $auteur,
+            'genres' => $genres,
         ]);
     }
 
@@ -89,5 +101,36 @@ class AuteurController extends AbstractController
         }
 
         return $this->redirectToRoute('auteur_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/filtrer/by3Livres", name="auteur_filtrer_3_livres", methods={"GET", "POST"})
+     */
+    public function filterBy3Livres(Request $request, AuteurRepository $auteurRepository)
+    {
+        $formLivre = $this->createFormBuilder(null)
+            ->setAction($this->generateUrl('auteur_filtrer_3_livres'))
+            ->add('livres', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true
+                ],
+                'label' => 'Auteurs ayant écrit dans plus de 3 livres',
+                'required' => true
+            ])
+            ->getForm();
+
+        $formLivre->handleRequest($request);
+
+        if ($formLivre->isSubmitted() && $formLivre->isValid()) {
+
+            $auteurs = $auteurRepository->findBy3Livres();
+
+            return $this->render('auteur/index.html.twig', [
+                "auteurs" => $auteurs
+            ]);
+        }
+        return $this->render('auteur/_filtrerBy3Livres.html.twig', [
+            'form' => $formLivre->createView(),
+        ]);
     }
 }

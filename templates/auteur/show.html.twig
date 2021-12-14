@@ -1,40 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Auteur{% endblock %}
+{% block title %}Auteur
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Auteur</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ auteur.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom_prenom</th>
-                <td>{{ auteur.nomPrenom }}</td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td>{{ auteur.sexe }}</td>
-            </tr>
-            <tr>
-                <th>Date_de_naissance</th>
-                <td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nationalite</th>
-                <td>{{ auteur.nationalite }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('auteur_index') }}">back to list</a>
-
-    <a href="{{ path('auteur_edit', {'id': auteur.id}) }}">edit</a>
-
-    {{ include('auteur/_delete_form.html.twig') }}
-</div>
+	<div class="container">
+		<div class="page row">
+			<div class="picture col s6">
+				{% if auteur.sexe == 'M' %}
+					<img width="20%" src="{{ asset('/assets/man.png') }}"/>
+				{% else %}
+					<img width="20%" src="{{ asset('/assets/woman.png') }}"/>
+				{% endif %}
+				<h3>
+					{% if auteur.sexe == 'M' %}
+						Mr.
+					{% else %}
+						Mme.
+					{% endif %}
+					{{ auteur.nomPrenom }}
+				</h3>
+			</div>
+			<div class="info col s6">
+				<h4>Informations</h4>
+				<table class="table responsive-table info-table">
+					<tbody>
+						<tr>
+							<th>Sexe</th>
+							<td>
+								{% if auteur.sexe == 'M' %}
+									Homme
+								{% else %}
+									Femme
+								{% endif %}
+							</td>
+						</tr>
+						<tr>
+							<th>Date de naissance</th>
+							<td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('d/m/Y') : '' }}</td>
+						</tr>
+						<tr>
+							<th>Nationalité</th>
+							<td>{{ auteur.nationalite }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6 offset-s6">
+				<a class="btn" href="{{ path('auteur_index') }}">
+					<i class="fas fa-clipboard-list"></i>
+					Revenir à la liste
+				</a>
+				<a class="btn amber darken-3" href="{{ path('auteur_edit', {'id': auteur.id}) }}">
+					<i class="fas fa-edit"></i>
+					Modifier
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s6">
+				<ul class="collection with-header">
+					<li class="collection-header">
+						<h5>Ses livres</h5>
+					</li>
+					{% for livre in auteur.livres %}
+						<li class="collection-item">
+							<div>
+								{{ livre.titre }}
+								<a href="{{ path('livre_show', {'id': livre.id}) }}" class="secondary-content">
+									<i class="material-icons">send</i>
+								</a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col s6">
+				<ul class="collection with-header">
+					<li class="collection-header">
+						<h5>Genres <sup>(laquelles écrit au moins un livre)</sup></h5>
+					</li>
+					{% for genre in genres %}
+						<li class="collection-item">
+							<div>
+								{{ genre.nom }}
+								<a href="{{ path('genre_show', {'id': genre.id}) }}" class="secondary-content">
+									<i class="material-icons">send</i>
+								</a>
+							</div>
+						</li>
+					{% else %}
+                        <li class="collection-item">
+                            Aucun genre trouvé !
+                        </li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -78,7 +78,7 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			var Calendar = document.querySelectorAll('.datepicker');
 			M.Datepicker.init(Calendar, {
-			format: 'yyyy-mm-dd'
+				format: 'yyyy-mm-dd'
 			});
 
 			var modal = document.querySelectorAll('.modal');
@@ -89,6 +89,9 @@
 
 			var tooltip = document.querySelectorAll('.tooltipped');
 			M.Tooltip.init(tooltip, {});
+
+			var tabs = document.querySelectorAll('.tabs');
+			M.Tabs.init(tabs, {});
 			
 		});
 		</script>
