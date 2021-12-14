@@ -110,7 +110,7 @@ table.info-table {border: 2px solid #eee;}
     margin: auto !important;
 }
 
-.form ul li {
+.form ul li:not(.dropdown-content li) {
   background: #ff817e;
   color: #fff;
   padding: 5px;

@@ -31,7 +31,7 @@ class IsISBNValidator extends ConstraintValidator
         $sommePair = 0;
         $sommeImpair = 0;
         for ($i = 0; $i < count($numbers); $i++) {
-            $num = intval($numbers[$i]);
+            $num = $numbers[$i];
             $sum = 0;
             $rem = 0;
             for ($j = 0; $j <= strlen($num); $j++) {
@@ -40,9 +40,11 @@ class IsISBNValidator extends ConstraintValidator
                 $num = $num / 10;
             }
             if ($i % 2 == 0) {
-                $sommeImpair = $sum;
-            } else $sommePair = $num;
+                $sommeImpair += $sum;
+            } else $sommePair += $sum;
         }
+
+        //dump(["pair" => $sommePair, "impair" => $sommeImpair]); die;
 
         if ((3 * $sommePair + $sommeImpair) % 10 != 0) {
             return $this->context->buildViolation($constraint->message)

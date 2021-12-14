@@ -38,6 +38,11 @@ class InitController extends AbstractController
             $genre->setNom($g->nom);
             if(!$genreRepo->findOneByNom($genre->getNom()))
                 $entityManager->persist($genre);
+            else {
+                return $this->render('init/index.html.twig', [
+                    'error' => 'Vous avez déjà initialisé la base de données',
+                ]);
+            }
             $entityManager->flush();
         }
 
@@ -80,7 +85,6 @@ class InitController extends AbstractController
 
         return $this->render('init/index.html.twig', [
             'controller_name' => 'InitController',
-            'genres' => $genres
         ]);
     }
 }
